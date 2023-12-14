@@ -1,0 +1,57 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+	ViewData["Title"] = "Edit";
+	Layout = "_LayoutProfile";
+}
+
+<head>
+</head>
+<body>
+	<div class="centered-container">
+		<form asp-controller="Profile" asp-action="uploadPhoto" method="post" enctype="multipart/form-data">
+			<div class="content-box" style="background-color: lightgrey">
+				<section class="content-box">
+					<div>
+						<div class="row d-flex justify-content-center align-items-center h-100">
+							<div class="col col-md-9 col-lg-7 col-xl-5">
+								<div style="border-radius: 15px;">
+									<div class="card-body p-4">
+										<div class="d-flex text-black">
+											<div class="flex-shrink-0">
+													<img src="@ViewBag.User.PhotoPath"
+														 alt="Generic placeholder image" class="img-fluid"
+														 style="width: 180px; border-radius: 10px;" />
+											</div>
+											<div class="flex-grow-1 ms-3">
+												<h5 class="mb-1">@ViewBag.User.Name</h5>
+												<input class="form-control" id="readOnlyInput" type="text" placeholder="@ViewBag.User.Email" readonly="">
+												<br />
+												<div class="d-flex justify-content-start rounded-3 p-2 mb-2"
+													 style="background-color: #efefef;">
+													<div>
+														<p class="small text-muted mb-1">Phone</p>
+														<p class="mb-0">@ViewBag.User.Phone</p>
+													</div>
+													<div class="px-3">
+														<p class="small text-muted mb-1">HomeCode</p>
+														<p class="mb-0">@ViewBag.User.HomeCode</p>
+													</div>
+													<div>
+														<p class="small text-muted mb-1">Id</p>
+														<p class="mb-0">@ViewBag.User.Cedula</p>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+			</div>
+		</form>
+	</div>
+</body>

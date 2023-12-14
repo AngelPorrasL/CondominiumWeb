@@ -1,0 +1,112 @@
+﻿﻿﻿@{
+    ViewData["Title"] = "Index";
+}
+
+<head>
+
+    <link rel="stylesheet" href="~/css/Home.css" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#myInput").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#myTable tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+
+</head>
+
+<body>
+    <figure class="text-center">
+        <blockquote class="blockquote">
+            <p class="mb-0 gradient-text">Crea una visita favorita</p>
+        </blockquote>
+        <figcaption class="blockquote-footer">
+            Ingresa al condomonio con mayor facilidad!
+        </figcaption>
+    </figure>
+
+    <div class="centered-container">
+        <div class="content-box">
+            <a asp-controller="Visitas" asp-action="Visitas" class="btn btn-primary">Volver</a>
+            <a asp-controller="Favorites" asp-action="Favorites" class="btn btn-primary">Ver favoritos creados</a>
+            <div class="row justify-content-center">
+                <div class="content-box" style="margin-top: 5px">
+                    <div class="card">
+                        <div class="card-header">
+                            <ul class="nav nav-tabs card-header-tabs">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="login-tab" data-bs-toggle="tab" href="#favorites-form"><i class="bi bi-bookmark-heart-fill"></i></a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="card-body">
+                            <div class="tab-content">
+                                <div class="tab-pane fade show active" id="visitas-form">
+                                    <h2>Crea tu visita favorita</h2>
+                                    <form asp-controller="Favorites" asp-action="Create">
+                                        <div class="form-floating mb-3">
+                                            <input type="number" class="form-control" id="cedula" name="cedula" required>
+                                            <label for="id">Cedula:</label>
+                                        </div>
+                                        <div class="form-floating mb-3">
+                                            <input type="text" class="form-control" id="name" name="name" required>
+                                            <label for="name">Nombre:</label>
+                                        </div>
+                                        <div class="form-floating mb-3">
+                                            <input type="text" class="form-control" id="vehicle" name="vehicle" required>
+                                            <label for="vehicle">Tipo de vehículo:</label>
+                                        </div>
+                                        <div class="form-floating mb-3">
+                                            <input type="text" class="form-control" id="brand" name="brand" required>
+                                            <label for="brand">Marca de vehículo:</label>
+                                        </div>
+                                        <div class="form-floating mb-3">
+                                            <input type="text" class="form-control" id="model" name="model" required>
+                                            <label for="model">Modelo de vehículo:</label>
+                                        </div>
+                                        <div class="form-floating mb-3">
+                                            <input type="text" class="form-control" id="color" name="color" required>
+                                            <label for="color">Color de vehículo:</label>
+                                        </div>
+                                            <button type="submit" class="btn btn-primary">Save</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="centered-container">
+            <figure class="text-center">
+                <blockquote class="blockquote">
+                    <p class="mb-0"></p>
+                </blockquote>
+            </figure>
+        </div>
+        </div>
+        <!-- Include Bootstrap and JavaScript -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                // Escuchar el cambio en el switch de vehículo
+                $('#vehicleSwitch').change(function () {
+                    var isChecked = $(this).prop('checked');
+
+                    // Habilitar o deshabilitar campos de vehículo según el estado del switch
+                    if (isChecked) {
+                        $('#vehicle, #brand, #model, #color').prop('disabled', false);
+                    } else {
+                        $('#vehicle, #brand, #model, #color').prop('disabled', true);
+                    }
+                });
+            });
+        </script>
+</body>

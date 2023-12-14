@@ -1,0 +1,25 @@
+﻿﻿﻿@{
+	ViewData["Title"] = "Error";
+}
+
+@* <h1 class="text-danger"></h1>
+<h2 class="text-danger"></h2>
+<a href=""></a>
+
+<div class="container mt-5">
+	<div class="alert alert-danger" role="alert">
+		<h4 class="alert-heading">@ViewBag.Error.Title</h4>
+		<p>@ViewBag.Error.ErrorMessage</p>
+		<hr>
+		<a href="@ViewBag.Error.Path" class="action-button">@ViewBag.Error.ActionMessage</a>
+	</div>
+</div> *@
+
+<div class="card border-light mb-3" style="max-width: 20rem;">
+	<div class="card-header">Alert!</div>
+	<div class="card-body">
+		<h2>@ViewBag.Error.Title</h2>
+		<p class="errormessage">@ViewBag.Error.ErrorMessage</p>
+		<a href="@ViewBag.Error.Path" class="action-button">@ViewBag.Error.ActionMessage</a>
+	</div>
+</div>

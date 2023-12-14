@@ -1,0 +1,172 @@
+﻿﻿﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "_LayoutAdmin";
+}
+
+<head>
+
+    <link rel="stylesheet" href="~/css/Home.css" />
+    <!-- Option 1: Include in HTML -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $("#myInput").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#myTable tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+
+    <style>
+        .Mybutton {
+            padding: 1.3em 3em;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2.5px;
+            font-weight: 500;
+            color: #000;
+            background-color: #fff;
+            border: none;
+            border-radius: 45px;
+            box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease 0s;
+            cursor: pointer;
+            outline: none;
+        }
+
+            .Mybutton:hover {
+                background-color: black;
+                box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.4);
+                color: #fff;
+                transform: translateY(-7px);
+            }
+
+            .Mybutton:active {
+                transform: translateY(-1px);
+            }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="centered-container">
+        <div class="content-box">
+            <div class="card">
+                <div class="card-header">
+                    <input class="form-control" id="myInput" type="text" placeholder="Search..">
+                </div>
+                @foreach (var @item in @ViewBag.Users)
+                {
+                    <div class="card mb-3">
+                        <h3 class="card-header">User</h3>
+                        <fieldset disabled="">
+                            <input class="form-control" id="disabledInput" type="text" placeholder="@item.Id" disabled="">
+                        </fieldset>
+                        <img src="@item.PhotoPath" class="d-block user-select-none" width="200" height="200" alt="Image cap" />
+                        <div class="card-body">
+                            <h5 class="card-title">Nombre</h5>
+                            <h6 class="card-subtitle text-muted">@item.Name</h6>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-text">Email</h5>
+                            <p class="card-title">@item.Email</p>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><strong>Role:</strong> @item.Role</li>
+                            <li class="list-group-item"><strong>Home Code:</strong> @item.HomeCode</li>
+                            <li class="list-group-item"><strong>Phone:</strong> @item.Phone</li>
+                            <li class="list-group-item"><strong>Placa Libre:</strong> @item.PlacaLibre</li>
+                            <li class="list-group-item"><strong>Cedula:</strong> @item.Cedula</li>
+                        </ul>
+                        <div class="options">
+@*                             <div class="option">
+                                <a class="btn btn-primary" href="#" onclick="window.location='/Visitas/Edit/@item.Id?Cedula=@item.Cedula&Name=@item.Name&Vehicle=@item.Vehicle&Brand=@item.Brand&Model=@item.Model&Color=@item.Color&Date=@item.Date'">Editar</a>
+                        </div> *@
+                            <div class="option">
+                                <form id="deleteForm-@item.Email" asp-controller="Admin" asp-action="Delete" asp-route-userId="@item.Id" method="post">
+                                    <a type="submit" value="Delete" class="btn btn-danger delete-button" href="#">Delete</a>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="card-footer text-muted">
+
+                        </div>
+                    </div>
+                    <!-- Modal de Confirmación de Eliminación -->
+                    <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="confirmDeleteModalLabel">Confirma para eliminar</h5>
+                                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    ¿Estás seguro de que deseas eliminar este usuario?
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                                    <form asp-controller="Admin" asp-action="Delete" asp-route-visitId="@item.Id" method="post">
+                                        <input type="submit" value="Sí, Eliminar" class="btn btn-danger" />
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+        <p></p>
+        <div>
+            <button id="myButton" class="Mybutton" data-url="/Home">
+                Volver
+            </button>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("myButton").addEventListener("click", function () {
+            // Obtén la URL del atributo data-url
+            var url = this.getAttribute("data-url");
+
+            // Redirige al usuario a la URL
+            window.location.href = url;
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $('.delete-button').click(function (e) {
+                e.preventDefault(); // Detén el envío del formulario por defecto
+
+                // Muestra el modal de confirmación
+                $('#confirmDeleteModal').modal('show');
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $('form[id^="deleteForm-"]').on("submit", function (e) {
+                e.preventDefault(); // Evita que el formulario se envíe de inmediato
+
+                var form = $(this);
+
+                // Mostrar una ventana modal de confirmación antes de enviar el formulario
+                if (confirm("¿Estás seguro de que deseas eliminar este usuario?")) {
+                    // Si el usuario confirma, envía el formulario
+                    form.off("submit").submit();
+                }
+            });
+        });
+    </script>
+
+
+</body>

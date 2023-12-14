@@ -1,0 +1,138 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Viewed";
+    Layout = "_LayoutSecurity";
+}
+<head>
+    <script>
+        $(document).ready(function () {
+            $("#myInput").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $(".searching").filter(function () {
+                    // Obtén el valor del atributo data-search de la tarjeta
+                    var searchValue = $(this).data("search").toLowerCase();
+                    $(this).toggle(searchValue.indexOf(value) > -1);
+                });
+            });
+        });
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#toggleUser").click(function () {
+                $(".user-content").slideToggle();
+            });
+        });
+    </script>
+</head>
+<body>
+    <br />
+    <figure class="text-center">
+        <blockquote class="blockquote">
+            <p class="mb-0 gradient-text">Proyecto Habitacional Seleccionado</p>
+        </blockquote>
+        <figcaption class="blockquote-footer">
+            <span class="badge bg-primary">@ViewBag.Viewed.Name</span>
+        </figcaption>
+    </figure>
+    <div class="card mb-3">
+        <h3 class="card-header" id="toggleUser"><i class="bi bi-caret-down"></i> Condomino</h3>
+        <div class="user-content" style="display: none;">
+            <fieldset disabled="">
+                <input class="form-control" id="disabledInput" type="text" placeholder="@ViewBag.Viewed.Id" disabled="">
+            </fieldset>
+            <div class="card-body">
+                <h5 class="card-title">Nombre</h5>
+                <h6 class="card-subtitle text-muted">@ViewBag.Viewed.Name</h6>
+            </div>
+            <div class="card-body">
+                <h5 class="card-text">Email</h5>
+                <p class="card-title">@ViewBag.Viewed.Email</p>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><strong>Home Code:</strong>@ViewBag.Viewed.HomeCode</li>
+                <li class="list-group-item"><strong>Phone:</strong>@ViewBag.Viewed.Phone</li>
+                <li class="list-group-item"><strong>Placa Libre:</strong>@ViewBag.Viewed.PlacaLibre</li>
+                <li class="list-group-item"><strong>Cedula:</strong>@ViewBag.Viewed.Cedula</li>
+            </ul>
+            <table class="table table-hover">
+                <thead>
+                    <tr class="table-dark">
+                        <th scope="row"></th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+    <br />
+    <div class="centered-container">
+        <div class="card-header">
+            <input class="form-control" id="myInput" type="text" placeholder="Search..">
+        </div>
+    </div>
+    <br />
+    @foreach (var @item in @ViewBag.Visits)
+    {
+        @if (@item.UserName == @ViewBag.Viewed.Name)
+        {
+            <div class="searching" data-search="@item.Name @item.Cedula @item.Brand @item.Model @item.Vehicle @item.Color @item.Date">
+                <div class="centered-container">
+                    <div class="content-box">
+                        <div class="card">
+                            <div class="card mb-3">
+                                <h3 class="card-header">Visita</h3>
+                                <svg href="" class="d-block user-select-none" width="100%" height="50" focusable="false" role="img" preserveAspectRatio="xMidYMid slice" viewBox="0 0 318 180" style="font-size:1.125rem;text-anchor:middle">
+                                    <rect width="100%" height="100%" fill="#868e96"></rect>
+                                    <text x="50%" y="50%" fill="#dee2e6" dy=".3em">@item.Id</text>
+                                </svg>
+                                <div class="card-body">
+                                    <h5 class="card-title">Nombre</h5>
+                                    <h6 class="card-subtitle text-muted">@item.Name</h6>
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-text">Cedula</h5>
+                                    <p class="card-title">@item.Cedula</p>
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">@item.Brand</li>
+                                    <li class="list-group-item">@item.Model</li>
+                                    <li class="list-group-item">@item.Vehicle</li>
+                                    <li class="list-group-item">@item.Color</li>
+                                </ul>
+                                <div class="card-footer text-muted">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar2-week" viewBox="0 0 16 16">
+                                        <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M2 2a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1z" />
+                                        <path d="M2.5 4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H3a.5.5 0 0 1-.5-.5zM11 7.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm-5 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5z" />
+                                    </svg>
+                                    @item.Date
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p></p>
+        }
+    }
+    <p></p>
+    <div>
+        <button id="myButton" class="Mybutton" data-url="/Security/Index">
+            Volver
+        </button>
+    </div>
+    <p></p>
+    <div class="progress">
+        <div class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
+    <script>
+        document.getElementById("myButton").addEventListener("click", function () {
+            // Obtén la URL del atributo data-url
+            var url = this.getAttribute("data-url");
+
+            // Redirige al usuario a la URL
+            window.location.href = url;
+        });
+    </script>
+</body>

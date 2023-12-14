@@ -1,0 +1,56 @@
+﻿﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "VisitCheck";
+    Layout = "_LayoutSecurity";
+}
+
+<div class="container mt-4">
+    <h1 class="mb-4">Security Guard</h1>
+    <div class="row mb-3">
+        <div class="col-md-12">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Cedula</th>
+                        <th>Vehiculo</th>
+                        <th>Marca</th>
+                        <th>Modelo</th>
+                        <th>Color</th>
+                        <th>Tiene el acceso permitido?</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var @item in ViewBag.Visits)
+                    {
+                        <tr class="visit-row">
+                            <td>@item.Name</td>
+                            <td>@item.Cedula</td>
+                            <td>@item.Vehicle</td>
+                            <td>@item.Brand</td>
+                            <td>@item.Model</td>
+                            <td>@item.Color</td>
+                            <td>
+                                @if (Convert.ToBoolean(@item.Acceso))
+                                {
+                                    <span>Si</span>
+                                }
+                                else
+                                {
+                                    <form asp-controller="Visitas" asp-action="UpdateAccess" method="post">
+                                        <input type="hidden" name="VisitId" value="@item.Id" />
+                                        <label>
+                                            <input type="checkbox" name="completed" onchange="this.form.submit()" /> Darle acceso
+                                        </label>
+                                    </form>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

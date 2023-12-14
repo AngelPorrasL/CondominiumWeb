@@ -1,0 +1,62 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Vehicles";
+    Layout = "_LayoutSecurity";
+}
+<head>
+    <script>
+        $(document).ready(function () {
+            $("#myInput").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $(".searching").filter(function () {
+                    // Obtén el valor del atributo data-search de la tarjeta
+                    var searchValue = $(this).data("search").toLowerCase();
+                    $(this).toggle(searchValue.indexOf(value) > -1);
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="centered-container">
+        <div class="card-header">
+            <input class="form-control" id="myInput" type="text" placeholder="Search..">
+        </div>
+    </div>
+    <p></p>
+    @foreach (var @item in @ViewBag.Users)
+    {
+        if (item.Role == 0)
+        {
+            <div class="searching" data-search="@item.Name @item.Cedula @item.PlacaLibre @item.HomeCode">
+                <div class="centered-container">
+                    <div class="content-box">
+                        <div class="card">
+                            <div class="card mb-3">
+                                <h3 class="card-header"><i class="bi bi-car-front"></i> Vehículos con entrada libre</h3>
+                                <fieldset disabled="">
+                                    <input class="form-control" id="disabledInput" type="text" placeholder="@item.Id" disabled="">
+                                </fieldset>
+                                <div class="card-body">
+                                    <h5 class="card-title">Nombre</h5>
+                                    <h6 class="card-subtitle text-muted">@item.Name</h6>
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-text">Placa Libre</h5>
+                                    <p class="text-primary">@item.PlacaLibre</p>
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item"><strong>Home Code:</strong> @item.HomeCode</li>
+                                    <li class="list-group-item"><strong>Cedula:</strong> @item.Cedula</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p></p>
+        }
+    }
+</body>

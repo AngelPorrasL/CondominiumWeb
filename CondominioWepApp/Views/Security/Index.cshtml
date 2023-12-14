@@ -1,0 +1,71 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Index";
+    Layout = "_LayoutSecurity";
+}
+<head>
+
+</head>
+<body>
+    <figure class="text-center">
+        <input class="form-control" id="myInput" type="text" placeholder="Search..">
+    </figure>
+    <p></p>
+    @foreach (var @item in @ViewBag.Users)
+    {
+        if (item.Role == 0)
+        {
+            <div class="centered-container">
+                <div class="content-box">
+                    <div class="card">
+                        <div class="card mb-3">
+                            <h3 class="card-header">User</h3>
+                            <fieldset disabled="">
+                                <input class="form-control" id="disabledInput" type="text" placeholder="@item.Id" disabled="">
+                            </fieldset>
+                            <img src="@item.PhotoPath" class="d-block user-select-none" width="200" height="200" alt="Image cap" />
+                            <div class="card-body">
+                                <h5 class="card-title">Nombre</h5>
+                                <h6 class="card-subtitle text-muted">@item.Name</h6>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-text">Email</h5>
+                                <p class="card-title">@item.Email</p>
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item"><strong>Home Code:</strong> @item.HomeCode</li>
+                                <li class="list-group-item"><strong>Phone:</strong> @item.Phone</li>
+                                <li class="list-group-item"><strong>Placa Libre:</strong> @item.PlacaLibre</li>
+                                <li class="list-group-item"><strong>Cedula:</strong> @item.Cedula</li>
+                            </ul>
+                            <div class="options">
+                                <div class="option">
+                                    <a class="btn btn-primary" href="#" onclick="window.location='/Security/View/@item.Id?Name=@item.Name&Email=@item.Email&PhotoPath=@item.PhotoPath&HomeCode=@item.HomeCode&Phone=@item.Phone&PlacaLibre=@item.PlacaLibre&Cedula=@item.Cedula'">Seleccionar</a>
+                                </div>
+                            </div>
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr class="table-dark">
+                                        <th scope="row"></th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p></p>
+        }
+    }
+    <script>
+        document.getElementById("myButton").addEventListener("click", function () {
+            // Obtén la URL del atributo data-url
+            var url = this.getAttribute("data-url");
+
+            // Redirige al usuario a la URL
+            window.location.href = url;
+        });
+    </script>
+</body>
